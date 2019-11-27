@@ -5,25 +5,15 @@ namespace App\Infrastructure\Persistence;
 
 class Db
 {
-    private static $instance;
     private $db;
 
-    private function __construct()
+    public function __construct()
     {
         $this->db = new \mysqli('mysql', "db_user", "db_password", "db_name");
 
         if (!$this->db) {
             throw new \Exception("database error");
         }
-    }
-
-    public static function getInstance() : self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     public function hashtags() : array

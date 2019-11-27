@@ -18,20 +18,17 @@ class HashtagController
     /**
      * @Route("/", name="list_hashtags")
      *
+     * @param Db $db
      * @param Environment $twig
      * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    function listHashtags(Environment $twig)
+    function listHashtags(Db $db, Environment $twig)
     {
-        $db = Db::getInstance();
-
-        $hashtags = $db->hashtags();
-
         return (new Response())->setContent($twig->render('default/hashtag/listHashtags.html.twig', [
-            'hashtags' => $hashtags,
+            'hashtags' => $db->hashtags(),
         ]));
 
     }
