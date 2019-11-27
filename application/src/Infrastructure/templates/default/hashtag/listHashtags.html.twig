@@ -16,13 +16,13 @@
                 {% if hashtags|length > 0 %}
                 {% for hashtag in hashtags %}
                     <tr>
-                        <td>{{  hashtag.getName() }}</td>
+                        <td>{{  hashtag.name }}</td>
                         <td class="text-right">
-                            <a href="/export/{{ hashtag.getId().toString() }}/json" class="btn btn-secondary btn-sm">JSON</a>
-                            <a href="/export/{{ hashtag.getId().toString() }}/csv" class="btn btn-secondary btn-sm">CSV</a>
-                            <a href="/export/{{ hashtag.getId().toString() }}/excel" class="btn btn-secondary btn-sm">Excel</a>
+                            <a href="/export/{{ hashtag.id }}/json" class="btn btn-secondary btn-sm">JSON</a>
+                            <a href="/export/{{ hashtag.id }}/csv" class="btn btn-secondary btn-sm">CSV</a>
+                            <a href="/export/{{ hashtag.id }}/excel" class="btn btn-secondary btn-sm">Excel</a>
                         </td>
-                        <td class="text-right"><a href="/hashtag/{{ hashtag.getId().toString() }}" class="btn btn-secondary btn-sm">Random Tweet</a></td>
+                        <td class="text-right"><a href="/hashtag/{{ hashtag.id }}" class="btn btn-secondary btn-sm">Random Tweet</a></td>
                     </tr>
                 {% endfor %}
                 {% else %}
