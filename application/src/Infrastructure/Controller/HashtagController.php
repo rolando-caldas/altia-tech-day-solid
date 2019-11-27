@@ -8,6 +8,7 @@
 
 namespace App\Infrastructure\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HashtagController
@@ -16,7 +17,7 @@ class HashtagController
      * @Route("/", name="list_hashtags")
      *
      */
-    function listHashtags()
+    function listHashtags() : Response
     {
         $db = new \mysqli('mysql', "db_user", "db_password", "db_name");
 
@@ -30,13 +31,15 @@ class HashtagController
            $hashtags[] = $hashtag;
         }
 
-        $this->render($hashtags);
+
+        return (new Response())->setContent($this->render($hashtags));
+
     }
 
-    private function render(array $array)
+    private function render(array $array) : string
     {
 
-        echo '
+        $html = '
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,9 +85,9 @@ class HashtagController
                 ';
 
         foreach($array AS $value) {
-            echo '
+            $html .= '
         <tr>
-                        <td>#' . $value->name . '</td>
+                        <td>' . $value->name . '</td>
                         <td class="text-right">
                             <a href="/export/' . $value->id . '/json" class="btn btn-secondary btn-sm">JSON</a>
                             <a href="/export/' . $value->id . '//csv" class="btn btn-secondary btn-sm">CSV</a>
@@ -93,7 +96,7 @@ class HashtagController
                         <td class="text-right"><a href="/hashtag/' . $value->id . '/" class="btn btn-secondary btn-sm">Random Tweet</a></td>
                     </tr>';
         }
-        echo '
+        $html .= '
                   </tbody>
             </table>
                     </div>
@@ -108,7 +111,7 @@ class HashtagController
 </body>
 </html>
 ';
-        die;
+        return $html;
     }
 
 }
