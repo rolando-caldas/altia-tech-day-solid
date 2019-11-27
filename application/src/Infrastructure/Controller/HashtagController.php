@@ -27,15 +27,8 @@ class HashtagController
     function listHashtags(Environment $twig)
     {
         $db = Db::getInstance();
-        if (!$db) {
-            throw new \Exception("database error");
-        }
 
-        $hashtags = [];
-        $query = $db->query('SELECT * FROM hashtag');
-        while($hashtag = $query->fetch_object()) {
-           $hashtags[] = $hashtag;
-        }
+        $hashtags = $db->hashtags();
 
         return (new Response())->setContent($twig->render('default/hashtag/listHashtags.html.twig', [
             'hashtags' => $hashtags,
