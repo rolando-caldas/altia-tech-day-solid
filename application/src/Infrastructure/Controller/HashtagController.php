@@ -8,6 +8,7 @@
 
 namespace App\Infrastructure\Controller;
 
+use App\Infrastructure\Persistence\Db;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
@@ -25,8 +26,7 @@ class HashtagController
      */
     function listHashtags(Environment $twig)
     {
-        $db = new \mysqli('mysql', "db_user", "db_password", "db_name");
-
+        $db = Db::getInstance();
         if (!$db) {
             throw new \Exception("database error");
         }
@@ -42,6 +42,5 @@ class HashtagController
         ]));
 
     }
-
 
 }
