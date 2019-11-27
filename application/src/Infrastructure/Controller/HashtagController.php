@@ -26,6 +26,16 @@ class HashtagController
 
         $hashtags = [];
         $query = $db->query('SELECT * FROM hashtag');
+        while($hashtag = $query->fetch_object()) {
+           $hashtags[] = $hashtag;
+        }
+
+        $this->render($hashtags);
+    }
+
+    private function render(array $array)
+    {
+
         echo '
 <!DOCTYPE html>
 <html>
@@ -71,16 +81,16 @@ class HashtagController
                 <tbody>
                 ';
 
-        while($hashtag = $query->fetch_object()) {
+        foreach($array AS $value) {
             echo '
         <tr>
-                        <td>#' . $hashtag->name . '</td>
+                        <td>#' . $value->name . '</td>
                         <td class="text-right">
-                            <a href="/export/' . $hashtag->id . '/json" class="btn btn-secondary btn-sm">JSON</a>
-                            <a href="/export/' . $hashtag->id . '//csv" class="btn btn-secondary btn-sm">CSV</a>
-                            <a href="/export/' . $hashtag->id . '//excel" class="btn btn-secondary btn-sm">Excel</a>
+                            <a href="/export/' . $value->id . '/json" class="btn btn-secondary btn-sm">JSON</a>
+                            <a href="/export/' . $value->id . '//csv" class="btn btn-secondary btn-sm">CSV</a>
+                            <a href="/export/' . $value->id . '//excel" class="btn btn-secondary btn-sm">Excel</a>
                         </td>
-                        <td class="text-right"><a href="/hashtag/' . $hashtag->id . '/" class="btn btn-secondary btn-sm">Random Tweet</a></td>
+                        <td class="text-right"><a href="/hashtag/' . $value->id . '/" class="btn btn-secondary btn-sm">Random Tweet</a></td>
                     </tr>';
         }
         echo '
@@ -98,8 +108,7 @@ class HashtagController
 </body>
 </html>
 ';
-
-    die;
-
+        die;
     }
+
 }
