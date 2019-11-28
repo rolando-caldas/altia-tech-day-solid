@@ -49,3 +49,7 @@ services:
     App\Infrastructure\Service\TwitterClient: # Refactored service that extends GuzzleHttp\Client
         arguments:
             - { base_uri: '%app.twitter_client.base_uri%', handler: '@app.twitter_client.handler_stack'}
+
+    App\UseCase\ObtainAllHashtags:
+        arguments:
+            - '@App\Infrastructure\Persistence\Doctrine\Repository\HashtagRepository'
